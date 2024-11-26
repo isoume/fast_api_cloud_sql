@@ -12,10 +12,12 @@ pipeline {
                 echo 'Testing..'
             }
         }
-        stage("createEnvironment"){
-            sh """
-                sudo gcloud compute ssh worker-data-processing-dev --zone=europe-west1-b --project=doctolib-data-dev --command="mkdir -p /home/doctolib"
-            """
+        stage('createEnvironment'){
+            steps{
+                sh """
+                    sudo gcloud compute ssh worker-data-processing-dev --zone=europe-west1-b --project=doctolib-data-dev --command="mkdir -p /home/doctolib"
+                """
+            }
         }
         stage('Deploy') {
             steps {
