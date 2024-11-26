@@ -1,0 +1,56 @@
+pipeline:
+  agent: any
+  
+  environment:
+    GOOGLE_APPLICATION_CREDENTIALS: '/var/lib/jenkins/gcloud-credentials.json'  # Path to your service account key
+    GIT_REPO: 'https://github.com/yourusername/your-repo.git'                    # Replace with your repo URL
+    VM_IP: 'your-vm-ip'                                                         # External IP of your Google Compute Engine VM
+    REMOTE_USER: 'your-username'                                                # Username for SSH connection (e.g., 'ubuntu', 'gce-user')
+    REMOTE_DIR: '/home/your-username/your-project'                               # Directory on the VM where code will be deployed
+    PROJECT_ID: 'YOUR_PROJECT_ID'                                               # Replace with your Google Cloud project ID
+
+  stages:
+    - stage: Clone Repository
+      steps:
+        - script:
+            name: "Clone the repository"
+            body: |
+              git clone $GIT_REPO
+
+    - stage: Authenticate with Google Cloud
+      steps:
+        - script:
+            name: "Authenticate with Google Cloud"
+            body: |
+              gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}
+              gcloud config set project ${PROJECT_ID}
+
+    - stage: Push Code to Compute Engine
+      steps:
+        - script:
+            name: "Push code to GCE VM"
+            body: |
+              gcloud compute ssh ${REMOTE_USER}@${VM_IP} --command "
+                mkdir -p ${REMOTE_DIR} && 
+                cd ${REMOTE_DIR} && 
+                git pull origin main && 
+                rsync -avz ./ ${REMOTE_USER}@${VM_IP}:${REMOTE_DIR}"
+              
+  post:
+    always:
+      - script:
+          name: "Pipeline finished"
+          body: |
+            echo "Pipeline completed"
+
+    success:
+      - script:
+          name: "Deployment Successful"
+          body: |
+            echo "Deployment to Compute Engine successful"
+
+    failure:
+      - script:
+          name: "Deployment Failed"
+          body: |
+            echo "Deployment failed"
