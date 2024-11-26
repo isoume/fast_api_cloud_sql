@@ -22,7 +22,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    sudo gcloud compute scp main.py worker-data-processing-dev:/home/doctolib --zone=europe-west1-b
+                    sudo gcloud compute scp ./*.py worker-data-processing-dev:/home/doctolib --zone=europe-west1-b
+                    sudo gcloud compute scp Dockerfile worker-data-processing-dev:/home/doctolib --zone=europe-west1-b                    sudo gcloud compute scp ./*.py worker-data-processing-dev:/home/doctolib --zone=europe-west1-b
+                    sudo gcloud compute scp requirements.txt worker-data-processing-dev:/home/doctolib --zone=europe-west1-b        
                     #nohup python3 /path/to/your_script.py > output.log
                 """
             }
