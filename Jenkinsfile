@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                sudo gcloud compute scp main.py worker-data-processing-dev:/home --zone=europe-west1-b
             }
         }
     }
