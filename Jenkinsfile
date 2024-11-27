@@ -34,21 +34,21 @@ pipeline {
                 """
             }
         }
-        stage("CleanOlderContainer"){
-            steps{
-                sh """
-                    sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b\
-                        --project=doctolib-data-dev \
-                        --command='"docker ps --filter status=exited -q | xargs -r sudo docker rm"'
-                """
-            }
-        }
         stage("DeployDocker"){
             steps{
                 sh """
                     sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b\
                         --project=doctolib-data-dev \
                         --command="sudo docker run -e PASSWORD=${API_PASSWORD} -e HOST=${HOST} -d -p 8000:8000 api"
+                """
+            }
+        }
+        stage("CleanOlderContainer"){
+            steps{
+                sh """
+                    sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b\
+                        --project=doctolib-data-dev \
+                        --command='"docker ps --filter status=exited -q | xargs -r sudo docker rm"'
                 """
             }
         }
