@@ -43,7 +43,6 @@ def get_db():
 @app.get("/products", response_model=List[dict])
 async def get_all_products(db: Session = Depends(get_db)):
     products = db.query(Product).all()
-    print(products)
     return [{"id": product.product_id, "date": product.date, "price": product.price, "quantity": product.quantity} for product in products]
 
 @app.get("/")
