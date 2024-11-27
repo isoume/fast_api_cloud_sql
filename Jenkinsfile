@@ -39,7 +39,7 @@ pipeline {
                 sh """
                     sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b\
                         --project=doctolib-data-dev \
-                        --command="'sudo docker ps -aq | grep . && sudo docker ps -aq | xargs sudo docker rm -f'"
+                        --command='"sudo docker ps -aq | grep . && sudo docker ps -aq | xargs sudo docker rm -f"'
                 """
             }
         }
