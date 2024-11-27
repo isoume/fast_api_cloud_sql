@@ -25,7 +25,7 @@ pipeline {
         stage('BuildDocker'){
             steps{
                 sh """
-                    sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b --project=doctolib-data-dev --command="sudo docker build  /home/doctolib/Dockerfile -t api"
+                    sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b --project=doctolib-data-dev --command="sudo docker build -t api /home/doctolib/"
                 """
             }
         }
