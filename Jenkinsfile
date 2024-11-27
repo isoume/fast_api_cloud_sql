@@ -2,10 +2,7 @@ pipeline {
     agent any
     parameters {
         string(name: 'HOST', defaultValue: '10.38.0.3', description: 'Server')
-    }
-    environment {
-        // Set the secret password from Jenkins Credentials (you'll need to replace `HOST_PASSWORD` with your secret ID)
-        PASSWORD = credentials('API_PASSWORD')
+        string(name: 'API_PASSWORD', description: 'Server')
     }
     stages {
         stage('createEnvironment'){
