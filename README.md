@@ -23,6 +23,6 @@ First, clone this repository to your local machine:
 ```bash
 git clone https://github.com/isoume/fast_api_cloud_sql.git
 cd fast_api_cloud_sql
-`docker build . -t fast_api`<br>
-`docker run -d -p 8000:8000 fast_api`<br>
-`docker logs <container id>`<br>
+docker build . -t fast_api
+docker run -d -p 8000:8000 fast_api
+docker logs <container id>
