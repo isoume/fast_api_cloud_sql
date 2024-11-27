@@ -38,8 +38,8 @@ pipeline {
             steps{
                 sh """
                     sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b\
-                    --project=doctolib-data-dev \
-                    --command="sudo docker rm -f $(sudo docker ps -a -q)"
+                        --project=doctolib-data-dev \
+                        --command="sudo docker ps -a -q | xargs sudo docker rm -f"
                 """
             }
         }
@@ -47,8 +47,8 @@ pipeline {
             steps{
                 sh """
                     sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b\
-                    --project=doctolib-data-dev \
-                    --command="sudo docker run -d -p 8000:8000 api"
+                        --project=doctolib-data-dev \
+                        --command="sudo docker run -d -p 8000:8000 api"
                 """
             }
         }
