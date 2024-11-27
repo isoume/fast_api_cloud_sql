@@ -39,7 +39,7 @@ pipeline {
                 sh """
                     sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b\
                         --project=doctolib-data-dev \
-                        --command='"sudo docker ps -aq | grep . && sudo docker ps -aq | xargs sudo docker rm -f"'
+                        --command='"docker ps --filter status=exited -q | xargs -r sudo docker rm"'
                 """
             }
         }
@@ -48,7 +48,7 @@ pipeline {
                 sh """
                     sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b\
                         --project=doctolib-data-dev \
-                        --command="sudo docker run -d -p 8000:8000 api"
+                        --command="sudo docker run -e PASSWORD=${API_PASSWORD} -e HOST=${HOST} -d -p 8000:8000 api"
                 """
             }
         }

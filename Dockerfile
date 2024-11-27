@@ -6,6 +6,8 @@ COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 WORKDIR /app
 COPY main.py /app/main.py
+ARG PASSWORD
+ARG HOST
 ENV PASSWORD="api"
 ENV HOST="10.179.0.3"
 RUN echo "The value of PASSWORD is: $PASSWORD"
