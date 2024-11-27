@@ -9,5 +9,6 @@ COPY main.py /app/main.py
 ENV PASSWORD="api"
 ENV HOST="10.179.0.3"
 RUN echo "The value of PASSWORD is: $PASSWORD"
+RUN echo "Host is set to $HOST"
 EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
