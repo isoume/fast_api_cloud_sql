@@ -8,8 +8,8 @@ from typing import List
 DATA_BASE_NAME = "api_database"
 USER = "api"
 # Not recommended i will Process this later
-PASSWORD = "api"
-HOST = "10.179.0.3"
+PASSWORD = os.getenv('PASSWORD', 'default_version')
+HOST = os.getenv('HOST', "10.179.0.3")
 PORT = "3306"
 DATABASE_URL = f"mysql+pymysql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATA_BASE_NAME}"
 
