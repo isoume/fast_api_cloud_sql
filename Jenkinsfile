@@ -48,7 +48,7 @@ pipeline {
                 sh """
                     sudo gcloud compute ssh worker-data-processing-1-dev --zone=europe-west1-b\
                         --project=doctolib-data-dev \
-                        --command='"docker ps --filter status=exited -q | xargs -r sudo docker rm"'
+                        --command="sudo docker rm -f $(sudo docker ps -a -q) > /dev/null 2>&1"
                 """
             }
         }
