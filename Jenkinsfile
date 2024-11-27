@@ -9,7 +9,7 @@ pipeline {
                 """
             }
         }
-        stage('Deploy') {
+        stage('MoveProject') {
             steps {
 
                 sh """
@@ -24,6 +24,13 @@ pipeline {
                     echo 'copying the requirements.txt'
                     sudo gcloud compute scp requirements.txt worker-data-processing-dev:/home/doctolib --zone=europe-west1-b        
                     #nohup python3 /path/to/your_script.py > output.log
+                """
+            }
+        }
+        stage('BuildDocker'){
+            steps{
+                sh """
+                    sudo gcloud compute ssh worker-data-processing-dev --zone=europe-west1-b --project=doctolib-data-dev --command="sudo docker build  /home/doctolib/Dockerfile -t api"
                 """
             }
         }
