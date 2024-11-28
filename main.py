@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from typing import List
 
 
-DATA_BASE_NAME = "api_database"
+DATA_BASE_NAME = os.getenv('DATA_BASE_NAME', 'default_version')
 USER = "api"
 # Not recommended i will Process this later
 PASSWORD = os.getenv('PASSWORD', 'default_version')
